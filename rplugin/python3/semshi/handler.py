@@ -121,8 +121,11 @@ class BufferHandler:
 
         def wrapper():
             nonlocal res
-            res = func()
-            event.set()
+            try:
+                res = func()
+                event.set()
+            except:
+                res = None
 
         self._vim.async_call(wrapper)
         event.wait()
